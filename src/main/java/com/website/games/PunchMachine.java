@@ -1,3 +1,5 @@
+package com.website.games;
+
 import java.lang.Thread;
 
 public class PunchMachine extends Character {

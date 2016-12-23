@@ -1,3 +1,5 @@
+package com.website.games;
+
 public class Character {
     public int health;
     public int strength;
@@ -10,13 +12,13 @@ public class Character {
     }
 
     public int attack() {
-        System.out.println(this.name + " is attacking with " + this.strength + " damage!");
+        System.out.println(this.name + " punched for " + this.strength + " damage!");
         return this.strength;
     }
 
     public void takeDamage(int damage) {
         this.health -= damage;
-        System.out.println(this.name + " took " + damage + " damage.");
+        System.out.println(this.name + " took a " + damage + "-damage punch.");
         System.out.println(this.name + "'s health: " + this.health);
         System.out.println();
     }
