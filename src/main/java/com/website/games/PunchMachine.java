@@ -1,7 +1,5 @@
 package com.website.games;
 
-import java.lang.Thread;
-
 public class PunchMachine extends Character {
     private static String winner;
 
@@ -17,12 +15,26 @@ public class PunchMachine extends Character {
         System.out.println("The winner is " + winner + "!");
     }
 
-    private static void waitFor(long time) {
-        Thread thread = new Thread();
+    private static void combat(Character player0, Character player1) {
+        System.out.printf("Punch Contest: %s vs. %s%n%n", player0.getName(), player1.getName()); 
 
-        try {
-            thread.sleep(time);
-        } catch (InterruptedException e) {
+        player0.printStats();
+        player1.printStats();
+
+        while (player0.getHealth() > 0 && player1.getHealth() > 0) {
+            player1.takeDamage(player0.attack());
+
+            if (player1.getHealth() <= 0) {
+                setWinner(player0.getName());
+                break;
+            }
+
+            player0.takeDamage(player1.attack());
+
+            if (player0.getHealth() <= 0) {
+                setWinner(player1.getName());
+                break;
+            }
         }
     }
 
@@ -30,28 +42,7 @@ public class PunchMachine extends Character {
         Character hero = new Character("Tom", 20, 5);
         Character monster = new Character("Gorlav", 15, 4);
 
-        hero.printStats();
-        monster.printStats();
-
-        while (hero.getHealth() > 0 && monster.getHealth() > 0) {
-            monster.takeDamage(hero.attack());
-
-            if (monster.getHealth() <= 0) {
-                setWinner(hero.getName());
-                break;
-            }
-
-            waitFor(1500);
-
-            hero.takeDamage(monster.attack());
-
-            if (hero.getHealth() <= 0) {
-                setWinner(monster.getName());
-                break;
-            }
-    
-            waitFor(1500);
-        }
+        combat(hero, monster);
 
         printWinner();
     }
