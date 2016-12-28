@@ -1,26 +1,62 @@
 package com.website.games;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 public class Character {
     public int health;
     public int strength;
+    public int accuracy;
+    public int minAttack;
+    public int maxAttack;
     public String name;
 
-    public Character(String name, int health, int strength) {
+    public Character(String name) {
+        this.name = name;
+        this.health = 10;
+        this.accuracy = 50;
+        this.minAttack = 1;
+        this.strength = this.maxAttack = 3;
+    }
+
+    public Character(String name, int health, int strength, int accuracy, int minAttack) {
         this.name = name;
         this.health = health;
-        this.strength = strength;
+        this.accuracy = accuracy;
+        this.minAttack = minAttack;
+        this.strength = this.maxAttack = strength;
+    }
+
+    public boolean checkAccuracy() {
+        int check = ThreadLocalRandom.current().nextInt(1, 101);
+
+        if (check <= this.accuracy) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public int attack() {
-        System.out.println(this.name + " punched for " + this.strength + " damage!");
-        return this.strength;
+        boolean landBlow = this.checkAccuracy();
+
+        if (landBlow) {
+            int damage = ThreadLocalRandom.current().nextInt(this.minAttack, this.maxAttack + 1);
+
+            System.out.printf("%s damage dealt: %d%n", this.name, damage);
+
+            return damage;
+        } else {
+            System.out.printf("%s missed.%n", this.name);
+
+            return 0;
+        }
     }
 
-    public void takeDamage(int damage) {
+    public void defend(int damage) {
         this.health -= damage;
-        System.out.println(this.name + " took a " + damage + "-damage punch.");
-        System.out.println(this.name + "'s health: " + this.health);
-        System.out.println();
+
+        System.out.printf("%s damage taken: %d%n", this.name, damage);
+        System.out.printf("%s's health: %d%n%n", this.name, this.health);
     }
 
     public int getHealth() {
@@ -36,9 +72,8 @@ public class Character {
     }
 
     public void printStats() {
-        System.out.println("===== " + this.name + "'s stats =====");
-        System.out.println("Health: " + this.health);
-        System.out.println("Strength: " + this.strength);
-        System.out.println();
+        System.out.printf("===== %s's stats =====%n", this.name);
+        System.out.printf("Health: %d%n", this.health);
+        System.out.printf("Strength: %d%n%n", this.strength);
     }
 }
