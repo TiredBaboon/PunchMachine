@@ -8,7 +8,7 @@ public class Character {
     public int accuracy;
     public int minAttack;
     public int maxAttack;
-    public boolean isAlive;
+    public boolean isAlive = true;
     public String name;
 
     public Character(String name) {
@@ -17,7 +17,6 @@ public class Character {
         this.accuracy = 50;
         this.minAttack = 1;
         this.strength = this.maxAttack = 3;
-        this.isAlive = true;
     }
 
     public Character(String name, int health, int strength, int accuracy, int minAttack) {
