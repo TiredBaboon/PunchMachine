@@ -8,6 +8,7 @@ public class Character {
     public int accuracy;
     public int minAttack;
     public int maxAttack;
+    public boolean isAlive;
     public String name;
 
     public Character(String name) {
@@ -16,6 +17,7 @@ public class Character {
         this.accuracy = 50;
         this.minAttack = 1;
         this.strength = this.maxAttack = 3;
+        this.isAlive = true;
     }
 
     public Character(String name, int health, int strength, int accuracy, int minAttack) {
@@ -55,8 +57,16 @@ public class Character {
     public void defend(int damage) {
         this.health -= damage;
 
+        if(this.health <= 0) {
+            this.isAlive = false;
+        }
+
         System.out.printf("%s damage taken: %d%n", this.name, damage);
         System.out.printf("%s's health: %d%n%n", this.name, this.health);
+    }
+
+    public boolean getIsAlive() {
+        return this.isAlive;
     }
 
     public int getHealth() {
